@@ -6,6 +6,8 @@
 
 from tkinter import *
 from tkinter import messagebox
+import datetime
+
 pathname = "usernames.txt"
 window=Tk()
 window.geometry("400x200")
@@ -14,7 +16,8 @@ playerLocation = [1,1]
 
 #=======================ARRAYS==========
 currentLevelArray=[]
-validCommandArray=["Forward","Back","Right","Left"]
+validCommandArray=["Forward","Back","Right","Left","Log"]
+logArray=[]
 
 #=======================Canvas'==========
 
@@ -73,21 +76,20 @@ def checkCredentials(event):
     #If the username is not recognised do this
     else:
         askError("Invalid","Unknown user")
+        addToLog("Unknown User")
         if messagebox.askyesno("Unknown user.", "Create new user?"):
             with open(pathname, "a") as f:
+                addToLog("Created new user")
                 f.write("\n")
                 f.write(userNameString)
                 f.close()
-        else:
-            askMessage("Exit", "Program will now exit")
-            window.destroy()
-            quit()
 #Function to get array from info from .txt file  
 def getReadlines(pathname):
     try:
         file=open(pathname,"r")
     except:
         askError("Not Found","File Not Found")
+        addToLog("File Not Found")
     else:
         content=file.readlines()
         newContent=[]
@@ -124,10 +126,22 @@ def checkUser(event):
 
     #Only if userName is valid will the game launch
     if userName != None:
-        print("Starting a new game with the username...",userName)
-    startNewGame(userName)
+        addToLog("Starting new game")
+        startNewGame(userName)
+        
+
+def viewLog():
+    for item in logArray:
+        print(item)
 
 
+def addToLog(data):
+    temp=""
+    currentTime=str(datetime.datetime.now().time())
+    temp+=currentTime
+    temp+="  "
+    temp+=data
+    logArray.append(temp)
 #================================================================END OF FUNCTIONS========================    
 
 
@@ -136,7 +150,14 @@ def checkUser(event):
 Start new game function
 In future updates take argument to determine which level to load
 """
+
+
+
 def startNewGame(playername):
+
+
+    
+    
     hp = 80
 
     #Initialises a class for the player
@@ -157,7 +178,7 @@ def startNewGame(playername):
         cmd=cmd.capitalize()
 
         #Indexes The array to find a mathcing function
-        matchCommandArray=[player.moveForward,player.moveBack,player.turnRight,player.turnLeft]
+        matchCommandArray=[player.moveForward,player.moveBack,player.turnRight,player.turnLeft,viewLog]
         if cmd in validCommandArray:
             
             position=validCommandArray.index(cmd)
@@ -186,15 +207,19 @@ class player:
 
         playerLocation[0] = playerLocation[0] + 1
         print("Moved Forward")
+        addToLog("Moved Forward")
 
     def moveBack():
         print("Moved Backwards")
+        addToLog("Moved Back")
 
     def turnRight():
         print("Turned Right")
+        addToLog("Turned Right")
 
     def turnLeft():
         print("Turned Left")
+        addToLog("Turned Left")
 
         
 #=============RETURN FUNCTIONS=======
