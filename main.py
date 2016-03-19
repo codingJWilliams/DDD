@@ -29,7 +29,7 @@ userNameEntry.grid(row=0,column=1)
 
 
 
-#=======================FUNCTIONS=============
+#================================================================START OF FUNCTIONS========================    
 
 def askMessage(pre,message):
     try:
@@ -42,7 +42,12 @@ def askError(pre,message):
         messagebox.showerror(pre,message)
     except:
         print(message)
-#Function that checks the user's credentials
+
+def clearScreen():
+    for x in range(0,25):
+        print("\n")
+        
+#Function that checks the user's credentials in database
 def checkCredentials(event):
 
     #Gets the credentials from Entry
@@ -52,7 +57,6 @@ def checkCredentials(event):
     userNameArray=[]
     if content != None:
         for line in content:
-            line=line.rstrip()
             userNameArray.append(line)
             
         
@@ -62,7 +66,7 @@ def checkCredentials(event):
         askMessage("Valid","User name valid")
 
         window.destroy()
-
+        
         return userNameString
 
     #If the username is not recognised do this
@@ -82,34 +86,68 @@ def getReadlines(pathname):
     try:
         file=open(pathname,"r")
     except:
-        print("Error")
+        askError("Not Found","File Not Found")
     else:
         content=file.readlines()
+        newContent=[]
+        for line in content:
+            line=line.rstrip()
+            newContent.append(line)
+            
         file.close()
-        return content
+        return newContent
     
-"""
-Start new game function
-In future updates take argument to determine which level to load
-"""
 
+#Function to load a txt file into the current level array
 def importLevel(fileName):
+
+
+    #Read in line by line
     global currentLevelArray
     content=getReadlines(fileName)
+
+    #Validation
     if content != None:
         currentLevelArray=[]
         for line in content:
             currentLevelArray.append(line)
 
     print(currentLevelArray)
-def startNewGame():
-    
-    pass
 
-    
+
+#============================ACTUAL GAME FUNCTION=============
+"""
+Start new game function
+In future updates take argument to determine which level to load
+"""
+def startNewGame():
+    hp = 80
+    while hp > 0:
+        print("==============STARTING NEW GAME==================")
+        clearScreen()
+        for line in currentLevelArray:
+            print(line)
+        print("\n"*30)
+        
+#=============Initital setup funtions=========
+
+#This function runs when enter key is pressed.
+def checkUser(event):
+    userName=checkCredentials("")
+
+    #Only if userName is valid will the game launch
+    if userName != None:
+        print("Starting a new game with the username...",userName)
+    startNewGame()
+
+
+#================================================================END OF FUNCTIONS========================    
+
+#=============RETURN FUNCTIONS=======
+importLevel("level 1.txt")
     
 
 #=============BINDINGS============
-userNameEntry.bind("<Return>",checkCredentials)
+userNameEntry.bind("<Return>",checkUser)
 
 window.mainloop()
