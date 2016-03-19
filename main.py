@@ -7,7 +7,7 @@
 from tkinter import *
 from tkinter import messagebox
 import datetime
-
+import os
 pathname = "usernames.txt"
 window=Tk()
 window.geometry("400x200")
@@ -48,8 +48,7 @@ def askError(pre,message):
         print(message)
 
 def clearScreen():
-    for x in range(0,25):
-        print("\n")
+    os.system("cls")
         
 #Function that checks the user's credentials in database
 def checkCredentials(event):
@@ -168,6 +167,7 @@ def startNewGame(playername):
     while hp > 0:
         print("==============STARTING NEW GAME==================")
         clearScreen()
+        print(" You are at ({0}, {1}), and facing -->".format(playerLocation[0], playerLocation[1]))
         for line in currentLevelArray:
             print(line)
             
