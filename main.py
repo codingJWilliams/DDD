@@ -6,7 +6,7 @@ from tkinter import *
 
 window=Tk()
 window.geometry("400x200")
-window.title("DDD")
+window.title("DDD Login")
 
 #=======================Canvas'==========
 
@@ -38,6 +38,12 @@ def checkCredentials(event):
     #window.destroy()
     
 
+#Function that 
+def startNewGame():
+    pass
+
+    
+    
 
 #=============BINDINGS============
 userNameEntry.bind("<Return>",checkCredentials)
