@@ -14,7 +14,7 @@ playerLocation = [1,1]
 
 #=======================ARRAYS==========
 currentLevelArray=[]
-
+validCommandArray=["Forward","Back","Right","Left"]
 
 #=======================Canvas'==========
 
@@ -139,9 +139,11 @@ In future updates take argument to determine which level to load
 def startNewGame(playername):
     hp = 80
 
-    currentPlayer=Newplayer(playername,80)
+    #Initialises a class for the player
+    currentPlayer=player()
     print(currentPlayer)
-    
+
+    #While loop that runs until the player is dead
     while hp > 0:
         print("==============STARTING NEW GAME==================")
         clearScreen()
@@ -150,6 +152,27 @@ def startNewGame(playername):
             
         print("\n"*21)
         cmd = input(">")
+
+        #Converts input into capital
+        cmd=cmd.capitalize()
+
+        #Indexes The array to find a mathcing function
+        matchCommandArray=[player.moveForward,player.moveBack,player.turnRight,player.turnLeft]
+        if cmd in validCommandArray:
+            
+            position=validCommandArray.index(cmd)
+            
+            match=matchCommandArray[position]
+
+            #Trys to run the function
+            try:
+                match()
+            except:
+                print("Error starting command")
+
+        #If the command is not found tell the user       
+        else:
+            print("Invalid Command")
         
 #=============Initital setup funtions=========
 
@@ -162,7 +185,16 @@ class player:
     def moveForward():
 
         playerLocation[0] = playerLocation[0] + 1
-        
+        print("Moved Forward")
+
+    def moveBack():
+        print("Moved Backwards")
+
+    def turnRight():
+        print("Turned Right")
+
+    def turnLeft():
+        print("Turned Left")
 
         
 #=============RETURN FUNCTIONS=======
