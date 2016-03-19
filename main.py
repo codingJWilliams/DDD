@@ -28,10 +28,18 @@ def checkCredentials(event):
 
     #Gets the credentials from Entry
     userNameString=userNameEntry.get()
+    print(userNameString)
+
+    #Add Json Stuff Here
+
+
+    #Destroys Window Here (Uncomment when ready)
+    
+    #window.destroy()
     
 
 
 #=============BINDINGS============
-userNameEntry.bind("<Enter>",checkCredentials)
+userNameEntry.bind("<Return>",checkCredentials)
 
 window.mainloop()
