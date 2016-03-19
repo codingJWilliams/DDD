@@ -6,10 +6,14 @@
 
 from tkinter import *
 from tkinter import messagebox
-
+pathname = "usernames.txt"
 window=Tk()
 window.geometry("400x200")
 window.title("DDD Login")
+
+#=======================ARRAYS==========
+currentLevelArray=[]
+
 
 #=======================Canvas'==========
 
@@ -21,6 +25,7 @@ Label(openCanvas,text="Username").grid(row=0,column=0)
 
 userNameEntry=Entry(openCanvas)
 userNameEntry.grid(row=0,column=1)
+
 
 
 
@@ -56,14 +61,23 @@ def checkCredentials(event):
     if userNameString in userNameArray:
         askMessage("Valid","User name valid")
 
-        #window.destroy()
+        window.destroy()
+
+        return userNameString
 
     #If the username is not recognised do this
     else:
         askError("Invalid","Unknown user")
-            
-    
-    
+        if messagebox.askyesno("Unknown user.", "Create new user?"):
+            with open(pathname, "a") as f:
+                f.write("\n")
+                f.write(userNameString)
+                f.close()
+        else:
+            askMessage("Exit", "Program will now exit")
+            window.destroy()
+            quit()
+#Function to get array from info from .txt file  
 def getReadlines(pathname):
     try:
         file=open(pathname,"r")
@@ -78,7 +92,18 @@ def getReadlines(pathname):
 Start new game function
 In future updates take argument to determine which level to load
 """
+
+def importLevel(fileName):
+    global currentLevelArray
+    content=getReadlines(fileName)
+    if content != None:
+        currentLevelArray=[]
+        for line in content:
+            currentLevelArray.append(line)
+
+    print(currentLevelArray)
 def startNewGame():
+    
     pass
 
     
