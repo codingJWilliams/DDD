@@ -43,10 +43,17 @@ def checkCredentials(event):
     #Gets the credentials from Entry
     userNameString=userNameEntry.get()
 
-    validUsers=["Angus","Bob","Joe"]
+    content=getReadlines("usernames.txt")
+    userNameArray=[]
+    if content != None:
+        for line in content:
+            line=line.rstrip()
+            userNameArray.append(line)
+            
+        
 
     #If the userName is valid do this
-    if userNameString in validUsers:
+    if userNameString in userNameArray:
         askMessage("Valid","User name valid")
 
         #window.destroy()
@@ -57,7 +64,16 @@ def checkCredentials(event):
             
     
     
-
+def getReadlines(pathname):
+    try:
+        file=open(pathname,"r")
+    except:
+        print("Error")
+    else:
+        content=file.readlines()
+        file.close()
+        return content
+    
 """
 Start new game function
 In future updates take argument to determine which level to load
