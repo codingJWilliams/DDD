@@ -2,7 +2,10 @@
 #DDD
 #19/03/16
 
+#Program for text based game
+
 from tkinter import *
+from tkinter import messagebox
 
 window=Tk()
 window.geometry("400x200")
@@ -23,22 +26,42 @@ userNameEntry.grid(row=0,column=1)
 
 #=======================FUNCTIONS=============
 
+def askMessage(pre,message):
+    try:
+        messagebox.showinfo(pre,message)
+    except:
+        print(messsage)
+
+def askError(pre,message):
+    try:
+        messagebox.showerror(pre,message)
+    except:
+        print(message)
 #Function that checks the user's credentials
 def checkCredentials(event):
 
     #Gets the credentials from Entry
     userNameString=userNameEntry.get()
-    print(userNameString)
 
-    #Add Json Stuff Here
+    validUsers=["Angus","Bob","Joe"]
 
+    #If the userName is valid do this
+    if userNameString in validUsers:
+        askMessage("Valid","User name valid")
 
-    #Destroys Window Here (Uncomment when ready)
+        #window.destroy()
+
+    #If the username is not recognised do this
+    else:
+        askError("Invalid","Unknown user")
+            
     
-    #window.destroy()
     
 
-#Function that 
+"""
+Start new game function
+In future updates take argument to determine which level to load
+"""
 def startNewGame():
     pass
 
