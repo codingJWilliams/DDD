@@ -15,6 +15,19 @@ window.geometry("400x200")
 window.title("DDD Login")
 playerLocation = [1,1]
 playerLocationTemp = [1,1]
+#=======================Language========
+
+moveForward = "Moved Forward"
+moveBack = "Moved Back"
+moveLeft = "Moved Left"
+moveRight = "Moved Right"
+
+
+
+
+
+
+
 
 #=======================ARRAYS==========
 currentLevelArray=[]
@@ -139,7 +152,9 @@ def checkUser(event):
 def viewLog():
     for item in logArray:
         print(item)
-
+def printAndLog(data):
+    print(data)
+    addToLog(data)
 
 def addToLog(data):
     temp=""
@@ -183,7 +198,7 @@ def startNewGame(playername):
         cmd=cmd.capitalize()
 
         #Indexes The array to find a mathcing function
-        matchCommandArray=[player.moveForward,player.moveBack,player.turnRight,player.turnLeft,viewLog]
+        matchCommandArray=[player.moveForward,player.moveBack,player.goRight,player.goLeft,viewLog]
         if cmd in validCommandArray:
             
             position=validCommandArray.index(cmd)
@@ -215,26 +230,50 @@ class player:
             addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
         elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
             print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+            addToLog("Awoken Boss")
             battle.boss1()
         else:
             playerLocation = playerLocationTemp
-            print("Moved Forward")
-            addToLog("Moved Forward")
+            printAndLog(moveForward)
         
     def moveBack():
-        playerLocation[0] = playerLocation[0] - 1
-        print("Moved Backwards")
-        addToLog("Moved Back")
+        playerLocationTemp[0] = playerLocation[0] - 1
+        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+            print("You can't go that way")
+            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+            addToLog("Awoken Boss")
+            battle.boss1()
+        else:
+            playerLocation = playerLocationTemp
+            printAndLog(moveBack)
 
-    def turnRight():
-        playerLocation[1] = playerLocation[1] + 1
-        print("Turned Right")
-        addToLog("Turned Right")
+    def goRight():
+        playerLocationTemp[1] = playerLocation[1] + 1
+        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+            print("You can't go that way")
+            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+            addToLog("Awoken Boss")
+            battle.boss1()
+        else:
+            playerLocation = playerLocationTemp
+            printAndLog(moveRight)
 
-    def turnLeft():
-        playerLocation[1] = playerLocation[1] - 1
-        print("Turned Left")
-        addToLog("Turned Left")
+    def goLeft():
+        playerLocationTemp[1] = playerLocation[1] - 1
+        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+            print("You can't go that way")
+            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+            addToLog("Awoken Boss")
+            battle.boss1()
+        else:
+            playerLocation = playerLocationTemp
+            printAndLog(moveLeft)
 
         
 #=============RETURN FUNCTIONS=======
