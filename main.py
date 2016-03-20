@@ -80,7 +80,9 @@ def checkCredentials(event):
     userNameArray=[]
     if content != None:
         for line in content:
-            userNameArray.append(line)
+            words=line.split()
+            name=words[0]
+            userNameArray.append(name)
         
 
     #If the userName is valid do this
