@@ -9,10 +9,12 @@ from tkinter import messagebox
 import datetime
 import os
 pathname = "usernames.txt"
+currentMap = "level 1.txt"
 window=Tk()
 window.geometry("400x200")
 window.title("DDD Login")
 playerLocation = [1,1]
+playerLocationTemp = [1,1]
 
 #=======================ARRAYS==========
 currentLevelArray=[]
@@ -34,6 +36,10 @@ userNameEntry.grid(row=0,column=1)
 
 
 #================================================================START OF FUNCTIONS========================    
+
+def getMapLocation(currentMap,x,y):
+    lines = list(map(str.split, open(currentMap)))
+    return lines[x][y]
 
 def askMessage(pre,message):
     try:
@@ -98,7 +104,9 @@ def getReadlines(pathname):
             
         file.close()
         return newContent
-    
+class battle:
+    def boss1(sword = 0):
+        print("Not yet implemented")
 
 #Function to load a txt file into the current level array
 def importLevel(fileName):
@@ -114,8 +122,7 @@ def importLevel(fileName):
         for line in content:
             currentLevelArray.append(line)
 
-    print(currentLevelArray)
-
+    addToLog("Map loaded")
         
 #=============Initital setup funtions=========
 
@@ -160,12 +167,10 @@ def startNewGame(playername):
     hp = 80
 
     #Initialises a class for the player
-    currentPlayer=player()
-    print(currentPlayer)
 
     #While loop that runs until the player is dead
     while hp > 0:
-        print("==============STARTING NEW GAME==================")
+        print("==============STARTING NEW GAME==================\n +=== You start at point * ===+")
         clearScreen()
         print(" You are at ({0}, {1}), and facing -->".format(playerLocation[0], playerLocation[1]))
         for line in currentLevelArray:
@@ -204,11 +209,18 @@ def startNewGame(playername):
 class player:
 
     def moveForward():
-
-        playerLocation[0] = playerLocation[0] + 1
-        print("Moved Forward")
-        addToLog("Moved Forward")
-
+        playerLocationTemp[0] = playerLocation[0] + 1
+        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+            print("You can't go that way")
+            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+            battle.boss1()
+        else:
+            playerLocation = playerLocationTemp
+            print("Moved Forward")
+            addToLog("Moved Forward")
+        
     def moveBack():
         playerLocation[0] = playerLocation[0] - 1
         print("Moved Backwards")
