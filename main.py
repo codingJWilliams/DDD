@@ -210,14 +210,17 @@ class player:
         addToLog("Moved Forward")
 
     def moveBack():
+        playerLocation[0] = playerLocation[0] - 1
         print("Moved Backwards")
         addToLog("Moved Back")
 
     def turnRight():
+        playerLocation[1] = playerLocation[1] + 1
         print("Turned Right")
         addToLog("Turned Right")
 
     def turnLeft():
+        playerLocation[1] = playerLocation[1] - 1
         print("Turned Left")
         addToLog("Turned Left")
 
