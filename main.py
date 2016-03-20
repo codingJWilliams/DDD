@@ -140,7 +140,7 @@ def importLevel(fileName):
 #=============Initital setup funtions=========
 
 #This function runs when enter key is pressed.
-def checkUser(event):
+def checkUser(playerLocation):
     userName=checkCredentials("")
 
     #Only if userName is valid will the game launch
@@ -276,6 +276,6 @@ importLevel("level 1.txt")
     
 
 #=============BINDINGS============
-userNameEntry.bind("<Return>",checkUser)
+userNameEntry.bind("<Return>",lambda event: checkUser(playerLocation))
 
 window.mainloop()
