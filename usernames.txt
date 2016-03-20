@@ -1,4 +1,6 @@
 angus,58,187
-bob
-larry,89,187
+larry,219,187
 jay
+Bob,marley,12
+Darth,Vader,FAT
+Jim,298cm,250kg
