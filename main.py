@@ -10,6 +10,7 @@ pathname = "usernames.txt"
 window=Tk()
 window.geometry("400x200")
 window.title("DDD Login")
+playerLocation = [1,1]
 
 #=======================ARRAYS==========
 currentLevelArray=[]
@@ -148,7 +149,7 @@ def startNewGame(playername):
             print(line)
             
         print("\n"*21)
-        input(">")
+        cmd = input(">")
         
 #=============Initital setup funtions=========
 
@@ -156,17 +157,12 @@ def startNewGame(playername):
 
 #====================================================================CLASSES==========================
 
-class Newplayer:
+class player:
 
-    def __init__(self,name,health):
-        self.name=name
-        self.health=health
+    def moveForward():
 
-    def playerHit():
-        self.health=self.health-5
-
-    def checkHealth():
-        print(self.health)
+        playerLocation[0] = playerLocation[0] + 1
+        
 
         
 #=============RETURN FUNCTIONS=======
