@@ -13,14 +13,15 @@ currentMap = "level 1.txt"
 window=Tk()
 window.geometry("400x200")
 window.title("DDD Login")
+global playerLocation
 playerLocation = [1,1]
 playerLocationTemp = [1,1]
 #=======================Language========
 
-moveForward = "Moved Forward"
-moveBack = "Moved Back"
-moveLeft = "Moved Left"
-moveRight = "Moved Right"
+MoveForward = "Moved Forward"
+MoveBack = "Moved Back"
+MoveLeft = "Moved Left"
+MoveRight = "Moved Right"
 
 
 
@@ -80,7 +81,6 @@ def checkCredentials(event):
     if content != None:
         for line in content:
             userNameArray.append(line)
-            
         
 
     #If the userName is valid do this
@@ -146,7 +146,7 @@ def checkUser(event):
     #Only if userName is valid will the game launch
     if userName != None:
         addToLog("Starting new game")
-        startNewGame(userName)
+        startNewGame(userName, playerLocation)
         
 
 def viewLog():
@@ -174,7 +174,7 @@ In future updates take argument to determine which level to load
 
 
 
-def startNewGame(playername):
+def startNewGame(playername, playerLocation):
 
 
     
@@ -198,22 +198,20 @@ def startNewGame(playername):
         cmd=cmd.capitalize()
 
         #Indexes The array to find a mathcing function
-        matchCommandArray=[player.moveForward,player.moveBack,player.goRight,player.goLeft,viewLog]
-        if cmd in validCommandArray:
             
-            position=validCommandArray.index(cmd)
-            
-            match=matchCommandArray[position]
-
-            #Trys to run the function
-            try:
-                match()
-            except:
-                print("Error starting command")
-
-        #If the command is not found tell the user       
+        if cmd == "Forward":
+            playerLocation = moveForward(playerLocation)
+        elif cmd == "Back":
+            playerLocation = moveBack(playerLocation)
+        elif cmd == "Left":
+            playerLocation = goLeft(playerLocation)
+        elif cmd == "Right":
+            playerLocation = goRight(playerLocation)
+        elif cmd == "Log":
+            viewLog()
         else:
-            print("Invalid Command")
+            print("Invalid command")
+            addToLog("User tried an invalid command")
         
 #=============Initital setup funtions=========
 
@@ -221,60 +219,57 @@ def startNewGame(playername):
 
 #====================================================================CLASSES==========================
 
-class player:
-
-    def moveForward():
-        playerLocationTemp[0] = playerLocation[0] + 1
-        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
-            print("You can't go that way")
-            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
-        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
-            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
-            addToLog("Awoken Boss")
-            battle.boss1()
-        else:
-            playerLocation = playerLocationTemp
-            printAndLog(moveForward)
+def moveForward(playerLocation):
+    playerLocationTemp[0] = playerLocation[0] + 1
+    if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+        print("You can't go that way")
+        addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+    elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+        print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+        addToLog("Awoken Boss")
+        battle.boss1()
+    else:
+        printAndLog(MoveForward)
+        return playerLocationTemp
+    
+def moveBack(playerLocation):
+    playerLocationTemp[0] = playerLocation[0] - 1
+    if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+        print("You can't go that way")
+        addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+    elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+        print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+        addToLog("Awoken Boss")
+        battle.boss1()
+    else:
+        printAndLog(MoveBack)
+        return playerLocationTemp
+def goRight(playerLocation):
+    playerLocationTemp[1] = playerLocation[1] + 1
+    if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+        print("You can't go that way")
+        addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+    elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+        print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+        addToLog("Awoken Boss")
+        battle.boss1()
+    else:
+        printAndLog(MoveRight)
+        return playerLocationTemp
         
-    def moveBack():
-        playerLocationTemp[0] = playerLocation[0] - 1
-        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
-            print("You can't go that way")
-            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
-        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
-            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
-            addToLog("Awoken Boss")
-            battle.boss1()
-        else:
-            playerLocation = playerLocationTemp
-            printAndLog(moveBack)
 
-    def goRight():
-        playerLocationTemp[1] = playerLocation[1] + 1
-        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
-            print("You can't go that way")
-            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
-        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
-            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
-            addToLog("Awoken Boss")
-            battle.boss1()
-        else:
-            playerLocation = playerLocationTemp
-            printAndLog(moveRight)
-
-    def goLeft():
-        playerLocationTemp[1] = playerLocation[1] - 1
-        if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
-            print("You can't go that way")
-            addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
-        elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
-            print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
-            addToLog("Awoken Boss")
-            battle.boss1()
-        else:
-            playerLocation = playerLocationTemp
-            printAndLog(moveLeft)
-
+def goLeft(playerLocation):
+    playerLocationTemp[1] = playerLocation[1] - 1
+    if getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "#":
+        print("You can't go that way")
+        addToLog("Harry potter tried to run himself into a wall but dobby had closed Platform 9 3/4 ")
+    elif getMapLocation(currentMap, playerLocationTemp[0], playerLocationTemp[1]) == "B":
+        print("The boss lives there. You have awoken him, therefore it is your task to slay him.")
+        addToLog("Awoken Boss")
+        battle.boss1()
+    else:
+        printAndLog(MoveLeft)
+        return playerLocationTemp
         
 #=============RETURN FUNCTIONS=======
 importLevel("level 1.txt")
