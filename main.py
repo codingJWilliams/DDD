@@ -127,7 +127,8 @@ def startNewGame():
         clearScreen()
         for line in currentLevelArray:
             print(line)
-        print("\n"*30)
+        print("\n"*21)
+        input(">")
         
 #=============Initital setup funtions=========
 
