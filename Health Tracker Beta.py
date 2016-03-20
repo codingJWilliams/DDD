@@ -149,7 +149,7 @@ def checkCredentials():
 			break
 			
 	if found == False:
-		askMessage("Not Found", "Go Away")
+		askMessage("Not Found", "User Not Found")
 
 def insertEntry(entry,message):
         entry.delete(0,END)
