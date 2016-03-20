@@ -114,21 +114,6 @@ def importLevel(fileName):
 
     print(currentLevelArray)
 
-
-#============================ACTUAL GAME FUNCTION=============
-"""
-Start new game function
-In future updates take argument to determine which level to load
-"""
-def startNewGame():
-    hp = 80
-    while hp > 0:
-        print("==============STARTING NEW GAME==================")
-        clearScreen()
-        for line in currentLevelArray:
-            print(line)
-        print("\n"*21)
-        input(">")
         
 #=============Initital setup funtions=========
 
@@ -139,11 +124,51 @@ def checkUser(event):
     #Only if userName is valid will the game launch
     if userName != None:
         print("Starting a new game with the username...",userName)
-    startNewGame()
+    startNewGame(userName)
 
 
 #================================================================END OF FUNCTIONS========================    
 
+
+#============================ACTUAL GAME FUNCTION=============
+"""
+Start new game function
+In future updates take argument to determine which level to load
+"""
+def startNewGame(playername):
+    hp = 80
+
+    currentPlayer=Newplayer(playername,80)
+    print(currentPlayer)
+    
+    while hp > 0:
+        print("==============STARTING NEW GAME==================")
+        clearScreen()
+        for line in currentLevelArray:
+            print(line)
+            
+        print("\n"*21)
+        input(">")
+        
+#=============Initital setup funtions=========
+
+
+
+#====================================================================CLASSES==========================
+
+class Newplayer:
+
+    def __init__(self,name,health):
+        self.name=name
+        self.health=health
+
+    def playerHit():
+        self.health=self.health-5
+
+    def checkHealth():
+        print(self.health)
+
+        
 #=============RETURN FUNCTIONS=======
 importLevel("level 1.txt")
     
